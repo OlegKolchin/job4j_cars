@@ -13,24 +13,19 @@ public class Ad {
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "carBody_id")
-    private CarBody carBody;
+    @JoinColumn(name = "car_id")
+    private Car car;
 
     private String photoUrl;
 
     public Ad() {
     }
 
-    public static Ad of(String description, String photoUrl, Brand brand, CarBody carBody) {
+    public static Ad of(String description, String photoUrl, Car car) {
         Ad ad = new Ad();
         ad.description = description;
         ad.photoUrl = photoUrl;
-        ad.brand = brand;
-        ad.carBody = carBody;
+        ad.car = car;
         return ad;
     }
 
@@ -50,20 +45,12 @@ public class Ad {
         this.description = description;
     }
 
-    public Brand getBrand() {
-        return brand;
+    public Car getCar() {
+        return car;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public CarBody getCarBody() {
-        return carBody;
-    }
-
-    public void setCarBody(CarBody carBody) {
-        this.carBody = carBody;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public String getPhotoUrl() {
