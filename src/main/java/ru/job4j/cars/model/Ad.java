@@ -1,6 +1,7 @@
 package ru.job4j.cars.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +18,9 @@ public class Ad {
     private Car car;
 
     private String photoUrl;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
     public Ad() {
     }

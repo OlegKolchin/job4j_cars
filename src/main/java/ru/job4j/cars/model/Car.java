@@ -17,17 +17,17 @@ public class Car {
     private Brand brand;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "carBody_id")
-    private CarBody carBody;
+    @JoinColumn(name = "body_id")
+    private Body body;
 
     public Car() {
     }
 
-    public static Car of(String name, Brand brand, CarBody carBody) {
+    public static Car of(String name, Brand brand, Body body) {
         Car car = new Car();
         car.name = name;
         car.brand = brand;
-        car.carBody = carBody;
+        car.body = body;
         return car;
     }
 
@@ -55,12 +55,12 @@ public class Car {
         this.brand = brand;
     }
 
-    public CarBody getCarBody() {
-        return carBody;
+    public Body getBody() {
+        return body;
     }
 
-    public void setCarBody(CarBody carBody) {
-        this.carBody = carBody;
+    public void setBody(Body body) {
+        this.body = body;
     }
 
     @Override

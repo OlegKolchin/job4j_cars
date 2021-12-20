@@ -4,21 +4,21 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "carBody")
-public class CarBody {
+@Table(name = "body")
+public class Body {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
 
-    public CarBody() {
+    public Body() {
     }
 
-    public static CarBody of(String name) {
-        CarBody carBody = new CarBody();
-        carBody.name = name;
-        return carBody;
+    public static Body of(String name) {
+        Body body = new Body();
+        body.name = name;
+        return body;
     }
 
     public int getId() {
@@ -45,8 +45,8 @@ public class CarBody {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CarBody carBody = (CarBody) o;
-        return id == carBody.id;
+        Body body = (Body) o;
+        return id == body.id;
     }
 
     @Override
