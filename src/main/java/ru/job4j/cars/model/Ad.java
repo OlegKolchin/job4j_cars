@@ -22,14 +22,23 @@ public class Ad {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
+    private boolean sold;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Ad() {
     }
 
-    public static Ad of(String description, String photoUrl, Car car) {
+    public static Ad of(String description, String photoUrl, Car car, User user) {
         Ad ad = new Ad();
         ad.description = description;
         ad.photoUrl = photoUrl;
         ad.car = car;
+        ad.created = new Date();
+        ad.sold = false;
+        ad.user = user;
         return ad;
     }
 
@@ -63,6 +72,14 @@ public class Ad {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean saleStatus) {
+        this.sold = saleStatus;
     }
 
     @Override

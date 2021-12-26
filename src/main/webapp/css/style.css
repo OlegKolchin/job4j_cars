@@ -1,0 +1,35 @@
+body {
+    background: #f0efe9;
+}
+
+.container {
+    position: absolute;
+    left: 10px; right: 10px; top: 50px; bottom: 10px;
+}
+
+
+.card {
+    border-color: white;
+}
+
+.form-control {
+    background: #f0efe9;
+    border: #f0efe9;
+}
+
+.form-select {
+    background: #f0efe9;
+    border: #f0efe9;
+}
+
+.btn-outline-secondary {
+    background: #f0efe9;
+    border: #f0efe9;
+}
+
+.btn-outline-secondary:hover {
+    background: #adb5bd;
+    border: #adb5bd;
+}
+
+

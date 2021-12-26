@@ -1,10 +1,14 @@
 package ru.job4j.cars.store;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.job4j.cars.model.Ad;
+import ru.job4j.cars.model.User;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -12,12 +16,56 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
-public class AdRepository {
+public class AdStore {
+    private static final Gson GSON = new GsonBuilder().create();
+
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
 
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+
+    public void save(Ad ad) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(ad);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void updateAdSaleStatus(int id) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.createSQLQuery("update ad set sold = not(sold) where id=" + id)
+                .executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void save(User user) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(user);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public User findUserByEmail(String email) {
+        return (User) tx(session -> session.createQuery("from User u where u.email = :u_email")
+                .setParameter("u_email", email)
+                .uniqueResult());
+    }
+
+    public User findUserByName(String name) {
+        return (User) tx(session -> session.createQuery("from User u where u.name = :name")
+                .setParameter("name", name)
+                .uniqueResult());
+    }
+
+
+    public List findAll() {
+        return tx(session -> session.createQuery("from Ad").list());
+    }
 
     public List recentAds() {
        return tx(session -> session.createQuery("from Ad a where a.created between :yes and :tod")
@@ -50,11 +98,5 @@ public class AdRepository {
         } finally {
             session.close();
         }
-    }
-
-    public static void main(String[] args) {
-        AdRepository repository = new AdRepository();
-        List list = repository.findWithPhoto();
-        System.out.println(list.isEmpty());
     }
 }
