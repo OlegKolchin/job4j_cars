@@ -13,9 +13,8 @@ import java.io.IOException;
 public class EditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        AdStore store = new AdStore();
         String s = req.getParameter("id").split("ad")[1];
         int id = Integer.parseInt(s);
-        store.updateAdSaleStatus(id);
+        AdStore.getInstance().updateAdSaleStatus(id);
     }
 }

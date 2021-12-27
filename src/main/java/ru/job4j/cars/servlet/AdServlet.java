@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "AdServlet", value = "/ad.do")
@@ -23,8 +24,7 @@ public class AdServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        AdStore store = new AdStore();
-        String json = GSON.toJson(store.findAll());
+        String json = GSON.toJson(AdStore.getInstance().findAll());
         output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();
@@ -38,11 +38,10 @@ public class AdServlet extends HttpServlet {
         String description = extractPartValue("description", req);
         User user = (User) req.getSession().getAttribute("session_user");
         String fileName = String.format("%d_%s_%s.png", user.getId(), brand, model);
-        String fileUrl = "d:/cars/" + fileName;
+        String fileUrl = getImgDirectory() + fileName;
         req.getPart("formFile").write(fileUrl);
 
-        AdStore store = new AdStore();
-        store.save(Ad.of(description, fileUrl, Car.of(model, Brand.of(brand), Body.of(body)), user));
+        AdStore.getInstance().save(Ad.of(description, fileUrl, Car.of(model, Brand.of(brand), Body.of(body)), user));
 
     }
 
@@ -52,5 +51,13 @@ public class AdServlet extends HttpServlet {
                 .lines()
                 .collect(Collectors.joining(""));
         return value;
+    }
+
+    private String getImgDirectory() throws IOException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream input = classLoader.getResourceAsStream("app.properties");
+        Properties cfg = new Properties();
+        cfg.load(input);
+        return cfg.getProperty("imageDirectory");
     }
 }

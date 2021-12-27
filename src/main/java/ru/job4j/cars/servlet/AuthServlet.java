@@ -23,8 +23,7 @@ public class AuthServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        AdStore store = new AdStore();
-        String json = GSON.toJson(store.findUserByEmail(req.getParameter("email")));
+        String json = GSON.toJson(AdStore.getInstance().findUserByEmail(req.getParameter("email")));
         output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();
@@ -34,8 +33,7 @@ public class AuthServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        AdStore store = new AdStore();
-        User user = store.findUserByEmail(email);
+        User user = AdStore.getInstance().findUserByEmail(email);
         if (user == null || !user.getPassword().equals(password)) {
             resp.sendError(400);
         } else {

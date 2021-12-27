@@ -10,20 +10,28 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.cars.model.Ad;
 import ru.job4j.cars.model.User;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.function.Function;
 
 public class AdStore {
-    private static final Gson GSON = new GsonBuilder().create();
-
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
 
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+
+    public static class AdStoreHolder {
+        public static final AdStore HOLDER_INSTANCE = new AdStore();
+    }
+
+    public static AdStore getInstance() {
+        return AdStoreHolder.HOLDER_INSTANCE;
+    }
 
     public void save(Ad ad) {
         Session session = sf.openSession();
@@ -98,5 +106,18 @@ public class AdStore {
         } finally {
             session.close();
         }
+    }
+
+    public static void main(String[] args) {
+        Properties cfg = new Properties();
+        try (InputStream in = new FileInputStream(new File("src/main/resources/app.properties"))) {
+            cfg.load(in);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(cfg.getProperty("imageDirectory"));
     }
 }

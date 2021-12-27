@@ -17,7 +17,7 @@ public class RegServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        AdStore store = new AdStore();
+        AdStore store = AdStore.getInstance();
         if (store.findUserByName(name) != null || store.findUserByEmail(email) != null) {
             resp.sendError(409);
         } else {
