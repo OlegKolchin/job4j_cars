@@ -107,17 +107,4 @@ public class AdStore {
             session.close();
         }
     }
-
-    public static void main(String[] args) {
-        Properties cfg = new Properties();
-        try (InputStream in = new FileInputStream(new File("src/main/resources/app.properties"))) {
-            cfg.load(in);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(cfg.getProperty("imageDirectory"));
-    }
 }
