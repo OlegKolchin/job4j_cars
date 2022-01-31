@@ -31,3 +31,6 @@ Main page with new ad
 ![ScreenShot](images/7.png)
 Changing ads status(only for user who posted it)
 ![ScreenShot](images/8.png)
+
+### Contact
+If you have any questions, feel free to contact me: oleg.kolchin.j@gmail.com
