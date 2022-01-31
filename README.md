@@ -1,20 +1,20 @@
 Car sale
 =============
-###Description
+### Description
 This project is the used car ad board. It uses hibernate, servlets and ajax.
 ### Used technologies:
-####Backend
+#### Backend
 1. Servlet 4.0.1
 2. Hibernate 5.4.15
 3. PostgreSQL
-####Frontend
+#### Frontend
 1. Html 5
 2. JavaScript
 3. CSS
 4. AJAX
 5. Bootstrap
 
-###Functionality
+### Functionality
 Main page(without authorization)
 ![ScreenShot](images/1.png)
 Login page
